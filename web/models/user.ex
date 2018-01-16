@@ -15,10 +15,10 @@ defmodule Rumbl.User do
 
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:name, :username], [])
+    |> cast(attrs, [:name, :surname, :username, :email, :group_id], [])
     |> validate_length(:username, min: 1, max: 20)
-    #|> validate_length(:surname, min: 1, max: 20)
-    #|> validate_format(:email, ~r/@/)
+    |> validate_length(:surname, min: 1, max: 20)
+    |> validate_format(:email, ~r/@/)
     #|> validate_format(:group_id, min: 5, max: 7)
     |> unique_constraint(:email)
   end
