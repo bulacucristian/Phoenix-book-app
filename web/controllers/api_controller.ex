@@ -1,6 +1,7 @@
 defmodule Rumbl.ApiController do
   use Rumbl.Web, :controller
   import Comeonin.Bcrypt, only: [checkpw: 2, dummy_checkpw: 0]
+  action_fallback Rumbl.FallbackController
   alias Rumbl.{Repo, User}
 
   def verify_credentials(conn, username, given_pass) do
@@ -17,6 +18,7 @@ defmodule Rumbl.ApiController do
    end
  end
 
+
   def authenticate(conn, params) do
     IO.inspect("atundasjnsdjksfd")
     case verify_credentials(conn, params["username"], params["password"]) do
@@ -27,5 +29,12 @@ defmodule Rumbl.ApiController do
           |> put_status(400)
           |> json(%{error: :invalid_grant})
     end
+  end
+
+  def get_users(conn, _params) do
+    IO.inspect("get_users")
+    students = Repo.all(User)
+    render(conn, "students.json", students: students)
+
   end
 end

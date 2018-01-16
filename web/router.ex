@@ -26,6 +26,7 @@ defmodule Rumbl.Router do
     pipe_through :api
 
     post "/authenticate", ApiController, :authenticate
+    get "/students", ApiController, :get_users
   end
 
   # Other scopes may use custom stacks.
