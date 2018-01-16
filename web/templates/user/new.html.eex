@@ -13,7 +13,7 @@
     <%= error_tag f, :name %>
   </div>
   <div class = "form-group">
-    <%= text_input f, :surnamename, placeholder: "Surnameame", class: "form-control" %>
+    <%= text_input f, :surname, placeholder: "Surnameame", class: "form-control" %>
     <%= error_tag f, :surname %>
   </div>
   <div class = "form-group">

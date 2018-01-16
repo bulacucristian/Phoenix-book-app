@@ -19,6 +19,7 @@ defmodule Rumbl.User do
     |> validate_length(:username, min: 1, max: 20)
     |> validate_length(:surname, min: 1, max: 20)
     |> validate_format(:email, ~r/@/)
+    |> validate_required([:name, :surname, :username, :email, :group_id])
     #|> validate_format(:group_id, min: 5, max: 7)
     |> unique_constraint(:email)
   end
