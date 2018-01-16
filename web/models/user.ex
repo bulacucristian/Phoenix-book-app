@@ -2,9 +2,12 @@ defmodule Rumbl.User do
   use Rumbl.Web, :model
 
   schema "users" do
-    field :name, :string
     field :username, :string
+    field :name, :string
+    field :surname, :string
     field :password, :string, virtual: true
+    field :email, :string
+    field :group_id, :string
     field :password_hash, :string
 
     timestamps
@@ -14,7 +17,10 @@ defmodule Rumbl.User do
     user
     |> cast(attrs, [:name, :username], [])
     |> validate_length(:username, min: 1, max: 20)
-    |> unique_constraint(:username)
+    #|> validate_length(:surname, min: 1, max: 20)
+    #|> validate_format(:email, ~r/@/)
+    #|> validate_format(:group_id, min: 5, max: 7)
+    |> unique_constraint(:email)
   end
 
   def registration_changeset(user, attrs) do
