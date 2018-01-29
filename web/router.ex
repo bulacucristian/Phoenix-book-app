@@ -23,11 +23,13 @@ defmodule Rumbl.Router do
     resources "/sessions", SessionController, only: [:new, :create, :delete]
   end
 
-  scope "/", Rumbl do
+  scope "/api", Rumbl do
     pipe_through :api
 
     post "/authenticate", ApiController, :authenticate
+    post "/students/:id/update_attendancy", ApiController, :update_attendancies
     get "/students", ApiController, :get_users
+    get "/laboratories", ApiController, :get_laboratories
   end
 
   # Other scopes may use custom stacks.

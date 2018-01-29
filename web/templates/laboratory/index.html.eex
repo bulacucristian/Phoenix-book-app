@@ -1,0 +1,10 @@
+<h1>Listing laboratories</h1>
+
+<table class = "table">
+  <%= for laboratory <- @laboratories do %>
+    <tr>
+      <td><b><%= render "laboratory.html", laboratory: laboratory %></b></td>
+      <td><%= link "View", to: laboratory_path(@conn, :show, laboratory.id) %></td>
+    </tr>
+  <% end %>
+</table>

@@ -1,0 +1,29 @@
+<h1> New Laboratory</h1>
+
+<%= form_for @changeset, laboratory_path(@conn, :create), fn f -> %>
+
+<%= if @changeset.action do %>
+  <div class = "alert alert-danger">
+    <p>Oops, something went wrong! Please check the errors below.</p>
+  </div>
+<% end %>
+<div class = "form-group">
+  <%= text_input f, :lab_name, placeholder: "Laboratory Name", class: "form-control" %>
+  <%= error_tag f, :lab_name %>
+</div>
+<div class = "form-group">
+  <%= text_input f, :lab_day, placeholder: "Laboratory Day", class: "form-control" %>
+  <%= error_tag f, :lab_day %>
+</div>
+<div class = "form-group">
+  <%= text_input f, :lab_hour, placeholder: "Laboratory Hour", class: "form-control" %>
+  <%= error_tag f, :lab_hour %>
+</div>
+<div class = "form-group">
+  <%= text_input f, :lab_group, placeholder: "Laboratory Group", class: "form-control" %>
+  <%= error_tag f, :lab_group %>
+</div>
+
+<%= submit "Create Laboratory", class: "btn btn-primary" %>
+
+<% end %>

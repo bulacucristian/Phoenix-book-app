@@ -9,13 +9,14 @@ defmodule Rumbl.User do
     field :email, :string
     field :group_id, :string
     field :password_hash, :string
+    field :attendancies, :map
 
     timestamps
   end
 
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:name, :surname, :username, :email, :group_id], [])
+    |> cast(attrs, [:name, :surname, :username, :email, :group_id, :attendancies], [])
     |> validate_length(:username, min: 1, max: 20)
     |> validate_length(:surname, min: 1, max: 20)
     |> validate_format(:email, ~r/@/)

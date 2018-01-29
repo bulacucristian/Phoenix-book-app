@@ -1,0 +1,1 @@
+ <b><%= @laboratory.lab_name %></b> <%= @laboratory.id %>

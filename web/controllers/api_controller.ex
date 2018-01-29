@@ -2,7 +2,8 @@ defmodule Rumbl.ApiController do
   use Rumbl.Web, :controller
   import Comeonin.Bcrypt, only: [checkpw: 2, dummy_checkpw: 0]
   action_fallback Rumbl.FallbackController
-  alias Rumbl.{Repo, User}
+  alias Rumbl.{Repo, User, Laboratory}
+  require Logger
 
   def verify_credentials(conn, username, given_pass) do
    user = Repo.get_by(User, %{username: username})
@@ -15,12 +16,10 @@ defmodule Rumbl.ApiController do
      true ->
        dummy_checkpw()
        {:error, :invalid_client, conn}
-   end
- end
-
+    end
+  end
 
   def authenticate(conn, params) do
-    IO.inspect("atundasjnsdjksfd")
     case verify_credentials(conn, params["username"], params["password"]) do
       {:ok, %User{} = user, conn} ->
         conn |> json(%{access_token: Rumbl.TokenService.generate_token(user)})
@@ -32,9 +31,24 @@ defmodule Rumbl.ApiController do
   end
 
   def get_users(conn, _params) do
-    IO.inspect("get_users")
     students = Repo.all(User)
     render(conn, "students.json", students: students)
+  end
 
+  def get_laboratories(conn, _params) do
+    laboratories = Repo.all(Laboratory)
+    render(conn, "laboratories.json", laboratories: laboratories)
+  end
+
+  def update_attendancies(conn, %{"id" => id} = params)  do
+    Logger.info("#=> Params received from React: #{inspect params}")
+    user = Repo.get(User, id)
+    attendancies = Map.merge(user.attendancies, params["attendancies"])
+    user_changeset = User.changeset(user, %{attendancies: attendancies})
+
+    with {:ok, %User{} = user} <- Repo.update(user_changeset) do
+      Logger.info("#=> Updated user : #{inspect user}")
+      render(conn, "updated.json", %{})
+    end
   end
 end

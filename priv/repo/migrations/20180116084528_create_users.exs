@@ -9,6 +9,7 @@ defmodule Rumbl.Repo.Migrations.CreateUsers do
       add :password_hash, :string
       add :email, :string
       add :group_id, :string
+      add :attendancies, :map
 
       timestamps
     end
