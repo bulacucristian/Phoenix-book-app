@@ -9,8 +9,7 @@ defmodule Rumbl.User do
     field :email, :string
     field :group_id, :string
     field :password_hash, :string
-    field :attendancies, :map
-
+    field :attendancies, :map, default: %{}
     timestamps
   end
 
@@ -22,7 +21,7 @@ defmodule Rumbl.User do
     |> validate_format(:email, ~r/@/)
     |> validate_required([:name, :surname, :username, :email, :group_id])
     #|> validate_format(:group_id, min: 5, max: 7)
-    |> unique_constraint(:email)
+    |> unique_constraint(:email, name: :users_email_username_index)
   end
 
   def registration_changeset(user, attrs) do

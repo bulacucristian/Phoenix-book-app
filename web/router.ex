@@ -27,6 +27,7 @@ defmodule Rumbl.Router do
     pipe_through :api
 
     post "/authenticate", ApiController, :authenticate
+    post "/register", ApiController, :register
     post "/students/:id/update_attendancy", ApiController, :update_attendancies
     get "/students", ApiController, :get_users
     get "/laboratories", ApiController, :get_laboratories

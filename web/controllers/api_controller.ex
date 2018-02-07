@@ -30,8 +30,19 @@ defmodule Rumbl.ApiController do
     end
   end
 
+  def register(conn, params) do
+    Logger.info("#=> Params received from React: #{inspect params}")
+    user_changeset = User.registration_changeset(%User{}, params)
+
+    with {:ok, %User{} = user} <- Repo.insert(user_changeset) do
+      Logger.info("#=> Added user : #{inspect user}")
+      render(conn, "updated.json", %{})
+    end
+  end
+
   def get_users(conn, _params) do
-    students = Repo.all(User)
+    students = User |> order_by(asc: :id) |> Repo.all()
+    # students = Repo.all(User)
     render(conn, "students.json", students: students)
   end
 
